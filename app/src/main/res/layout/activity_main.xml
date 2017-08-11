@@ -58,5 +58,24 @@
             app:layout_constraintLeft_toLeftOf="@+id/preview_custom"
             app:layout_constraintRight_toRightOf="@+id/preview_custom"
             app:layout_constraintTop_toBottomOf="@+id/preview_custom"/>
+
+        <Button
+            android:id="@+id/front_cam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="front"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="15dp"/>
+
+        <Button
+            android:id="@+id/back_cam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="16dp"
+            android:text="back"
+            app:layout_constraintBottom_toBottomOf="@+id/front_cam"
+            app:layout_constraintLeft_toRightOf="@+id/front_cam"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

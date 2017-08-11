@@ -12,10 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.TextureView;
+import android.view.View;
 
 import com.rw.imaging.CameraController;
 import com.rw.imaging.ImagingUtils;
 import com.rw.imagingsample.databinding.ActivityMainBinding;
+
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 public class MainActivity extends AppCompatActivity implements CameraController.PreviewCallback
 {
@@ -27,6 +34,26 @@ public class MainActivity extends AppCompatActivity implements CameraController.
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        mBinding.frontCam.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                stopCamera();
+                startCamera(CameraController.CameraType.Front, 90);
+            }
+        });
+
+        mBinding.backCam.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                stopCamera();
+                startCamera(CameraController.CameraType.Default, 90);
+            }
+        });
 
     }
 
@@ -41,31 +68,46 @@ public class MainActivity extends AppCompatActivity implements CameraController.
         }
         else
         {
-            startCamera();
+            startCamera(CameraController.CameraType.Front, 90);
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            startCamera();
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+//    {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//
+//        if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+//            startCamera();
+//    }
 
     @SuppressWarnings("MissingPermission")
-    private void startCamera()
+    private void startCamera(CameraController.CameraType type, int rotation)
     {
-        CameraController.connect(CameraController.CameraType.Front, 90);
+        Log.d("IMG", "opencv version: " + ImagingUtils.getVersion());
 
-        CameraController.PreviewSize p = new CameraController.PreviewSize(640, 480);// CameraController.getBestPreviewSize(640, 480);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+        }
+        else
+        {
+            CameraController.connect(type, rotation);
 
-        Log.d("IMG", "best preview: " + p.width+"x"+p.width);
+            CameraController.PreviewSize p = new CameraController.PreviewSize(640, 480);// CameraController.getBestPreviewSize(640, 480);
 
-        CameraController.setPreviewCallback(this);
+            Log.d("IMG", "best preview: " + p.width + "x" + p.width);
 
-        CameraController.startPreview(mBinding.previewMain, p);
+            CameraController.setPreviewCallback(this);
+
+            CameraController.startPreview(mBinding.previewMain, p);
+        }
+    }
+
+    private void stopCamera()
+    {
+        CameraController.stopPreview();
+        CameraController.disconnect();
     }
 
     @Override
@@ -73,8 +115,7 @@ public class MainActivity extends AppCompatActivity implements CameraController.
     {
         super.onPause();
 
-        CameraController.stopPreview();
-        CameraController.disconnect();
+        stopCamera();
     }
 
     @Override
@@ -85,16 +126,14 @@ public class MainActivity extends AppCompatActivity implements CameraController.
         long t = System.currentTimeMillis();
 
         ImagingUtils.PreviewResizeParams p = new ImagingUtils.PreviewResizeParams.Builder()
-//                .setTargetSize(c.getWidth(), c.getHeight())
+                .setTargetSize(c.getWidth(), c.getHeight())
                 .setBounds(0, (previewSize.width-previewSize.height)/2, previewSize.height, previewSize.width - (previewSize.width-previewSize.height)/2)
                 .setRotation(ImagingUtils.PreviewResizeParams.Rotation.Clockwise_90)
                 .create();
 
         Bitmap b = ImagingUtils.rotateCropAndResizePreview(frame, previewSize.width, previewSize.height, p);
+        c.drawBitmap(b, 0, 0, null);
 
-
-        c.drawBitmap(b, new Rect(0, 0, b.getWidth(), b.getHeight()), new Rect(0, 0, c.getWidth(), c.getHeight()), null);
-//        c.drawBitmap(b, 0, 0, null);
 
         Log.d("IMG", "processing time: " + (System.currentTimeMillis() - t));
 
