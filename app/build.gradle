@@ -19,6 +19,17 @@ android {
     }
 
     dataBinding.enabled true
+
+    splits {
+        abi {
+            enable true
+
+            reset()
+
+            include "x86", "armeabi"
+            universalApk false
+        }
+    }
 }
 
 dependencies {
