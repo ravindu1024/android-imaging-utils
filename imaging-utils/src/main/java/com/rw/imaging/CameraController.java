@@ -32,7 +32,6 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
     private final Boolean mCameraLock = true;
 
 
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////// PUBLIC API //////////////////////////////////////////////////////////////////////////
 
@@ -120,7 +119,6 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
     }
 
 
-
     @SuppressWarnings("WeakerAccess")
     public static class Face
     {
@@ -150,7 +148,7 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
 
             conversionMatrix.mapRect(rect);
 
-            if(face.leftEye != null)
+            if (face.leftEye != null)
             {
                 leftEye[0] = face.leftEye.x;
                 leftEye[1] = face.leftEye.y;
@@ -158,7 +156,7 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
                 conversionMatrix.mapPoints(leftEye);
             }
 
-            if(face.rightEye != null)
+            if (face.rightEye != null)
             {
                 rightEye[0] = face.rightEye.x;
                 rightEye[1] = face.rightEye.y;
@@ -166,7 +164,7 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
                 conversionMatrix.mapPoints(rightEye);
             }
 
-            if(face.mouth != null)
+            if (face.mouth != null)
             {
                 mouth[0] = face.mouth.x;
                 mouth[1] = face.mouth.y;
@@ -181,7 +179,6 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
     private CameraController()
     {
     }
@@ -194,7 +191,7 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
 
     private static CameraController getInstance()
     {
-        if(sInstance == null)
+        if (sInstance == null)
             sInstance = new CameraController();
 
         return sInstance;
@@ -263,7 +260,7 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
 
     private void _startPreview(TextureView preview, PreviewSize size)
     {
-        if(mState == CameraState.Opened)
+        if (mState == CameraState.Opened)
         {
             mState = CameraState.PreviewStarted;
 
@@ -282,7 +279,7 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
 
             mTargetTexture = preview;
 
-            Log.d(ImagingUtils.TAG, "Camera preview is avalable: "+preview.isAvailable());
+            Log.d(ImagingUtils.TAG, "Camera preview is avalable: " + preview.isAvailable());
 
             if (preview.isAvailable())
             {
@@ -344,7 +341,7 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
         /**
          * this is to forcefully set the preview callback everytime the user requests it
          */
-        if(mCamera != null)
+        if (mCamera != null)
         {
             mCamera.setPreviewCallback(this);
         }
@@ -353,7 +350,7 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
 
     private PreviewSize _getBestPreviewSize(int width, int height)
     {
-        float aspectRatio = (float)width/(float)height;
+        float aspectRatio = (float) width / (float) height;
 
         PreviewSize preview = new PreviewSize(640, 480);
         Log.d("IMG", "preview aspect to find: " + Float.toString(aspectRatio));
@@ -361,21 +358,21 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
 
         List<Camera.Size> sizes = mCamera.getParameters().getSupportedPreviewSizes();
 
-        for(Camera.Size s : sizes)
+        for (Camera.Size s : sizes)
         {
-            float ar = (float)s.width/(float)s.height;
+            float ar = (float) s.width / (float) s.height;
 
-            Log.d(ImagingUtils.TAG, "preview size: " + s.width+"x"+s.height+", aspect ratio: " +Float.toString(ar));
+            Log.d(ImagingUtils.TAG, "preview size: " + s.width + "x" + s.height + ", aspect ratio: " + Float.toString(ar));
 
-            if(min == -1 || Math.abs(aspectRatio - min) > Math.abs(aspectRatio - ar) || (Math.abs(min - ar) < 0.001f && s.width > preview.width))
+            if (min == -1 || Math.abs(aspectRatio - min) > Math.abs(aspectRatio - ar) || (Math.abs(min - ar) < 0.001f && s.width > preview.width))
             {
                 min = ar;
                 preview = new PreviewSize(s.width, s.height);
-                Log.d(ImagingUtils.TAG, "selecting size: "+s.width+"x"+s.height);
+                Log.d(ImagingUtils.TAG, "selecting size: " + s.width + "x" + s.height);
             }
         }
 
-        Log.d(ImagingUtils.TAG, "Best preview size: "+preview.width+"x"+preview.height);
+        Log.d(ImagingUtils.TAG, "Best preview size: " + preview.width + "x" + preview.height);
 
         return preview;
     }
@@ -437,7 +434,7 @@ public class CameraController implements TextureView.SurfaceTextureListener, Cam
     @Override
     public void onPreviewFrame(byte[] bytes, Camera camera)
     {
-        if(mCallback != null)
+        if (mCallback != null)
             mCallback.onCameraFrame(bytes, mCurrentPreviewSize);
     }
 

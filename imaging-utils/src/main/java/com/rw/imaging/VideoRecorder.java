@@ -56,10 +56,9 @@ public class VideoRecorder
     /////////////////////////////////////////////////////////////////////////
 
 
-
     private static VideoRecorder getInstance()
     {
-        if(sInstance == null)
+        if (sInstance == null)
             sInstance = new VideoRecorder();
 
         return sInstance;
@@ -102,7 +101,7 @@ public class VideoRecorder
         //rotation for the camera viewfinder
         //NOTE : This only works on some media players. Eg: works on VLC windows but not on VLC Linux
         mRecorder.setOrientationHint(rotationHint);
-        mRecorder.setMaxDuration(maxdurationMillis+1000);
+        mRecorder.setMaxDuration(maxdurationMillis + 1000);
 
 
         // Step 5 : set the file

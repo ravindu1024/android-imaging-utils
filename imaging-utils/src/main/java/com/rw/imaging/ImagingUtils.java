@@ -21,9 +21,10 @@ import org.opencv.imgproc.Imgproc;
 public class ImagingUtils
 {
     protected static final String TAG = "IMGUTILS";
+
     static
     {
-        if(!OpenCVLoader.initDebug())
+        if (!OpenCVLoader.initDebug())
             Log.e(TAG, "opencv load failed");
     }
 
@@ -35,8 +36,9 @@ public class ImagingUtils
 
     /**
      * Resize, crop and rotate the camera preview frame
-     * @param bytes preview data
-     * @param width original width
+     *
+     * @param bytes  preview data
+     * @param width  original width
      * @param height original height
      * @param params image processing parameters
      * @return
@@ -46,7 +48,7 @@ public class ImagingUtils
         Size finalSize = new Size(params.newWidth, params.newHeight);
         Rect cropRect = new Rect(params.cropX, params.cropY, params.cropWidth, params.cropHeight);
 
-        Mat rawMat = new Mat(height*3/2, width, CvType.CV_8UC1); // YUV data
+        Mat rawMat = new Mat(height * 3 / 2, width, CvType.CV_8UC1); // YUV data
         rawMat.put(0, 0, bytes);
         Mat rgbMat = new Mat(height, width, CvType.CV_8UC4); // RGBA image
         Imgproc.cvtColor(rawMat, rgbMat, Imgproc.COLOR_YUV2RGBA_NV21);
@@ -58,7 +60,7 @@ public class ImagingUtils
         Mat croppedMat = new Mat(rotatedMat, cropRect);
 
         //resize
-        if(finalSize.area() > 0)
+        if (finalSize.area() > 0)
             Imgproc.resize(croppedMat, croppedMat, finalSize);
 
 
@@ -72,16 +74,16 @@ public class ImagingUtils
     {
         Mat out = in;
 
-        if(rotation == PreviewResizeParams.Rotation.Clockwise_90)
+        if (rotation == PreviewResizeParams.Rotation.Clockwise_90)
         {
             out = in.t();
             Core.flip(out, out, -1);
         }
-        else if(rotation == PreviewResizeParams.Rotation.Clockwise_180)
+        else if (rotation == PreviewResizeParams.Rotation.Clockwise_180)
         {
             out = in;
         }
-        else if(rotation == PreviewResizeParams.Rotation.Clockwise_270)
+        else if (rotation == PreviewResizeParams.Rotation.Clockwise_270)
         {
             out = in.t();
             Core.flip(out, out, 1);
@@ -117,6 +119,7 @@ public class ImagingUtils
 
             /**
              * Create a new empty {@link PreviewResizeParams} object
+             *
              * @return
              */
             public PreviewResizeParams create()
@@ -126,9 +129,10 @@ public class ImagingUtils
 
             /**
              * Set bounds for cropping the frame
-             * @param left starting pixel on left
-             * @param top starting pixel on top
-             * @param right ending pixel on right
+             *
+             * @param left   starting pixel on left
+             * @param top    starting pixel on top
+             * @param right  ending pixel on right
              * @param bottom ending pixel at bottom
              * @return PreviewResizeParams
              */
@@ -144,7 +148,8 @@ public class ImagingUtils
 
             /**
              * Set new size to resize frame
-             * @param width new width
+             *
+             * @param width  new width
              * @param height new height
              * @return PreviewResizeParams
              */
@@ -158,6 +163,7 @@ public class ImagingUtils
 
             /**
              * Set image rotation
+             *
              * @param rotation rotation amount
              * @return PreviewResizeParams
              */
