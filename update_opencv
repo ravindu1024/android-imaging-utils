@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "get the latest opencv version from https://github.com/opencv/opencv/releases"
