@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray"
+        tools:context="com.rw.imagingsample.MainActivity">
+
+        <TextureView
+            android:id="@+id/preview_main"
+            android:layout_width="160dp"
+            android:layout_height="213dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextureView
+            android:id="@+id/preview_custom"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toRightOf="@+id/preview_main"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/preview_main"
+            app:layout_constraintVertical_bias="0.52"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:text="System Preview"
+            android:textAlignment="center"
+            app:layout_constraintLeft_toLeftOf="@+id/preview_main"
+            app:layout_constraintRight_toRightOf="@+id/preview_main"
+            app:layout_constraintTop_toBottomOf="@+id/preview_main"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Processed Preview"
+            android:textAlignment="center"
+            app:layout_constraintLeft_toLeftOf="@+id/preview_custom"
+            app:layout_constraintRight_toRightOf="@+id/preview_custom"
+            app:layout_constraintTop_toBottomOf="@+id/preview_custom"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>
