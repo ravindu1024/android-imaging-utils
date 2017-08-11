@@ -1,3 +1,39 @@
 #!/bin/bash
 
-echo "get the latest opencv version from https://github.com/opencv/opencv/releases"
+#echo "get the latest opencv version from https://github.com/opencv/opencv/releases"
+SDK_LOCATION=""
+if [[ $1 == https://github.com/opencv/opencv/releases/download* && $1 == *android-sdk.zip ]]; then
+	echo "Downloading Opencv Android sdk from : $1"
+	SDK_LOCATION=$1
+else
+	echo "Usage: update_opencv <opencv-android-sdk-download-url.zip>"
+fi
+
+if [[ $SDK_LOCATION == http* ]]; then
+	rm -rf opencv_temp
+	mkdir opencv_temp
+	cd opencv_temp
+	mkdir android-sdk
+	wget $SDK_LOCATION
+	unzip *android-sdk.zip -d android-sdk
+
+	cd ..
+
+	echo "removing old java sdk"
+	rm -rf imaging-utils/src/main/java/org
+
+	echo "updating with new java sdk"
+	cp -ar opencv_temp/android-sdk/OpenCV-android-sdk/sdk/java/src/org imaging-utils/src/main/java
+	cp -f opencv_temp/android-sdk/OpenCV-android-sdk/sdk/java/AndroidManifest.xml imaging-utils/src/main
+	cp -r opencv_temp/android-sdk/OpenCV-android-sdk/sdk/java/res imaging-utils/src/main/
+
+
+	echo "updating with new native libs"
+	rm -rf imaging-utils/src/main/jniLibs/armeabi/
+	rm -rf imaging-utils/src/main/jniLibs/x86/
+	mkdir imaging-utils/src/main/jniLibs/armeabi
+	mkdir imaging-utils/src/main/jniLibs/x86
+	cp opencv_temp/android-sdk/OpenCV-android-sdk/sdk/native/libs/armeabi/libopencv_java3.so imaging-utils/src/main/jniLibs/armeabi
+	cp opencv_temp/android-sdk/OpenCV-android-sdk/sdk/native/libs/x86/libopencv_java3.so imaging-utils/src/main/jniLibs/x86/
+
+fi
