@@ -10,6 +10,7 @@ A simple library that makes it easier to use the camera and do image processing 
 ```gradle
     compile 'com.github.ravindu1024:android-imaging-utils:v1.0.0-alpha3'
 ```
+Use "com.github.ravindu1024:android-imaging-utils:v1.0.0-alpha1" if the latest version causes any issues.
 
 # Features
 - OpenCV integration
@@ -38,3 +39,19 @@ VideoRecorder.startRecording(saveFilePath, rotation, maxRecordLengthMillis, camC
 ```java
 VideoRecorder.stopRecording();
 ```
+
+# Binary Size
+The library size will be around 30MB with opencv 3.3.0 so if you need to keep the apk size small, include the following in your app gradle file, in the android tag
+```gradle
+splits {
+        abi {
+            enable true
+
+            reset()
+
+            include "x86", "armeabi"
+            universalApk false
+        }
+    }
+```
+This creates 2 apk files - one for arm and one for x86 platforms.
