@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements CameraController.
 //            startCamera();
 //    }
 
-    @SuppressWarnings("MissingPermission")
     private void startCamera(CameraController.CameraType type, int rotation)
     {
         Log.d("IMG", "opencv version: " + ImagingUtils.getVersion());
