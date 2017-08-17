@@ -10,6 +10,7 @@ A simple library that makes it easier to use the camera and do image processing 
 ```gradle
     compile 'com.github.ravindu1024:android-imaging-utils:v1.0.0-alpha3'
 ```
+Use "com.github.ravindu1024:android-imaging-utils:v1.0.0-alpha1" if the latest version causes any issues.
 
 # Features
 - OpenCV integration
