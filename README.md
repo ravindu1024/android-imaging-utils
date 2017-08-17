@@ -8,7 +8,7 @@ A simple library that makes it easier to use the camera and do image processing 
 ```
 2 - Add this as an app dependency:
 ```gradle
-    compile 'com.github.ravindu1024:android-imaging-utils:v1.0.0-alpha3'
+    compile 'com.github.ravindu1024:android-imaging-utils:1.0.0'
 ```
 
 # Features
