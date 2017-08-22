@@ -3,8 +3,14 @@ A simple library that makes it easier to use the camera and do image processing 
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-android--imaging--utils-brightgreen.svg?style=flat-square)](https://android-arsenal.com/details/1/6047)
 
+Blur:
+
 ![alt tag](https://raw.githubusercontent.com/ravindu1024/android-imaging-utils/master/screens/screen1.png)
+RGB2Gray:
+
 ![alt tag](https://raw.githubusercontent.com/ravindu1024/android-imaging-utils/master/screens/screen2.png)
+Edge Detection (Canny):
+
 ![alt tag](https://raw.githubusercontent.com/ravindu1024/android-imaging-utils/master/screens/screen3.png)
 
 # Installation
