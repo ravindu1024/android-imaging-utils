@@ -1,6 +1,8 @@
 # android-imaging-utils
 A simple library that makes it easier to use the camera and do image processing via opencv.
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-android--imaging--utils-brightgreen.svg?style=flat-square)](https://android-arsenal.com/details/1/6047)
+
 # Installation
 1 - Add this to the allProjects repositories:
 ```gradle
@@ -8,7 +10,7 @@ A simple library that makes it easier to use the camera and do image processing 
 ```
 2 - Add this as an app dependency:
 ```gradle
-    compile 'com.github.ravindu1024:android-imaging-utils:v1.0.0-alpha3'
+    compile 'com.github.ravindu1024:android-imaging-utils:1.0.0'
 ```
 
 # Features
