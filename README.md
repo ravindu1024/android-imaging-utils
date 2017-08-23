@@ -73,3 +73,10 @@ splits {
     }
 ```
 This creates 2 apk files - one for arm and one for x86 platforms.
+
+If you only need to use the CameraController and VideoRecoder classes without any image processing, add the following to your app gradle file
+```gradle
+packagingOptions{
+        exclude 'lib/*/libopencv_java3.so'
+    }
+```
